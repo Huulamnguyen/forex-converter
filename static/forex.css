@@ -1,0 +1,14 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@300&display=swap');
+
+body {
+    font-family: 'Source Serif Pro', serif;
+}
+
+.messages .msg {
+    color: red;
+}
+
+.card-text{
+    font-size: 46px;
+}

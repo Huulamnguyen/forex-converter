@@ -1,0 +1,18 @@
+{% extends 'base.html'  %}
+{% block title %}Result{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">{{msg}}</h2>
+          <p class="card-text text-center">The result is: {{code}}{{res}}</p>  
+          <form action="/">
+            <button class="btn btn-info btn-lg btn-block mt-3 text-center">Home</button>
+        </form>        
+        </div>
+      </div>      
+    </div>    
+</div>
+{% endblock %}

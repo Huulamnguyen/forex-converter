@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/forex.css">
+    <title>{% block title %}{% endblock%}</title>
+</head>
+<body>
+    <div class="container align-content-center my-auto">
+        <main id="content"> 
+            <h1 class="text-center mt-3">Forex Converter</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <section class="messages">
+            {% for category, msg in messages %}
+                <p class="{{category}} alert alert-danger">{{msg}}</p>
+            {% endfor %}
+            </section>
+            {% endif %}
+            {% endwith %}    
+
+            {% block content %} 
+            <!-- * MAIN CONTENT HERE -->        
+            {% endblock %}
+
+        </main>
+    </div>    
+</body>
+</html>
