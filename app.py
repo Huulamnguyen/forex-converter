@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, session, flash, redirect
-from convert import currency_rate, currency_code, available_currencies
+from convert import currency_rate, currency_code, check_currency_code
 from forex_python.converter import RatesNotAvailableError
 
 app = Flask(__name__)
@@ -15,21 +15,26 @@ def home_page():
 @app.route('/result', methods=['POST'])
 def convert():
     """Show result"""
-    
+    errors = []    
     convert_from = request.form["convert_from"].upper()
     convert_to = request.form["convert_to"].upper()
     try: 
         amount = float(request.form["amount"])
         res = currency_rate(convert_from,convert_to,amount)
-    except (ValueError, RatesNotAvailableError):
-        if convert_from not in available_currencies and convert_to not in available_currencies:
-            flash(f"Not a valid code: {convert_from}", "msg")
-            flash(f"Not a valid code: {convert_to}", "msg")
-        elif convert_from not in available_currencies:
-            flash(f"Not a valid code: {convert_from}", "msg")
-        elif convert_to not in available_currencies:
-            flash(f"Not a valid code: {convert_to}", "msg")      
-        flash("Not a valid amount", "msg")
+    except (TypeError, ValueError, RatesNotAvailableError):
+
+        errors.append("Not a valid amount") 
+
+        if not check_currency_code(convert_from):
+            errors.append(f"Not a valid code: {convert_from}")            
+
+        if not check_currency_code(convert_to):
+            errors.append(f"Not a valid code: {convert_to}")             
+       
+        if errors:
+            for error in errors:
+                flash(error, "msg")
+            
         return redirect('/')         
      
     code = currency_code(convert_to)  
